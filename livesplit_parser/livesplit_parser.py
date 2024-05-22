@@ -25,6 +25,17 @@ class LivesplitData:
         self.split_info_df = self.__parse_segment_data(xml_dict, self.attempt_info_df)
         self.split_info_df = self.__add_float_seconds_cols(self.split_info_df, ['PersonalBest', 'BestSegment', 'Average', 'Median'])
 
+        # Optional metadata
+        platform = xml_dict.get('Metadata', {}).get('Platform', {})
+        
+        self.game_name = xml_dict.get('GameName')
+        self.game_icon = xml_dict.get('GameIcon')
+        self.category_name = xml_dict.get('CategoryName')
+        self.platform_name = platform.get('#text')
+        self.platform_uses_emulator = {'False': False, 'True': True}.get(platform.get('@usesEmulator'))
+        self.offset = xml_dict.get('Offset')
+        self.version = xml_dict.get('@version')
+
     def export_data(self):
         # Specify the Excel file path
         excel_file_path = f'{self.name}.xlsx'
