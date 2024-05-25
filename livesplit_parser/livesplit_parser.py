@@ -288,10 +288,12 @@ class LivesplitData:
 
         # now create an empty DataFrame
         segment_history_df = pd.DataFrame(index=idx, columns=col_names)
-        segment_history_df
 
         for d in data['Segments']['Segment']:
             seg_name = d['Name']
+
+            if not d['SegmentHistory']:
+                continue
 
             for t in d['SegmentHistory']['Time']:
                 # print(t)
