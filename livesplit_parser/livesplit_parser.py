@@ -31,6 +31,7 @@ class LivesplitData:
         self.game_name = xml_dict.get('GameName')
         self.game_icon = xml_dict.get('GameIcon')
         self.category_name = xml_dict.get('CategoryName')
+        self.layout_path = xml_dict.get('LayoutPath')
         self.platform_name = platform.get('#text')
         self.platform_uses_emulator = {'False': False, 'True': True}.get(platform.get('@usesEmulator'))
         self.offset = xml_dict.get('Offset')
