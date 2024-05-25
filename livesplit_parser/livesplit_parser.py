@@ -389,7 +389,7 @@ class LivesplitData:
 
         for i in segment_info_df.index:
             for c in cols:
-                if not pd.isna(segment_info_df[c][i]):
+                if not pd.isna(segment_info_df[c][i]) and segment_info_df[c][i] != 'NaT':
                     segment_info_df.loc[i, c] = round_time(segment_info_df[c][i])
 
         def compute_split_times(df, col_name):
