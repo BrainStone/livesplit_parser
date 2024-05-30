@@ -26,7 +26,9 @@ class LivesplitData:
         self.split_info_df = self.__add_float_seconds_cols(self.split_info_df, ['PersonalBest', 'BestSegment', 'Average', 'Median'])
 
         # Optional metadata
-        platform = xml_dict.get('Metadata', {}).get('Platform', {})
+        metadata: dict = xml_dict.get('Metadata', {})
+        platform: dict = metadata.get('Platform', {})
+        variables: list = metadata.get('Variables', {}).get('Variable', [])
         
         self.game_name = xml_dict.get('GameName')
         self.game_icon = xml_dict.get('GameIcon')
@@ -36,6 +38,14 @@ class LivesplitData:
         self.platform_uses_emulator = {'False': False, 'True': True}.get(platform.get('@usesEmulator'))
         self.offset = xml_dict.get('Offset')
         self.version = xml_dict.get('@version')
+
+        # Category Variables. They appear when speedrun.com has them
+        self.variables = {}
+
+        for variable in variables:
+            name = variable.get('@name')
+            text = variable.get('#text')
+            self.variables[name] = text
 
     def export_data(self):
         # Specify the Excel file path
